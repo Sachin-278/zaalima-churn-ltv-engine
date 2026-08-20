@@ -32,6 +32,10 @@ pip-wheel-metadata/
 # Logs
 *.log
 
+# Generated model artifacts
+Task-2/artifacts/
+Task-2/engineered_telco_data.csv
+
 # OS files
 .DS_Store
 Thumbs.db
