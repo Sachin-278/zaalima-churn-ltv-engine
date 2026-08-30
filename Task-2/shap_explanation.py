@@ -132,6 +132,12 @@ importance.to_csv(importance_path, index=False)
 print(f"SHAP feature importance saved to: {importance_path}")
 
 
-# Display top 10 features
 print("\nTop 10 features influencing churn predictions:")
 print(importance.head(10).to_string(index=False))
+
+# Display the most influential feature
+top_feature = importance.iloc[0]
+
+print("\nMost influential feature:")
+print(f"Feature: {top_feature['feature']}")
+print(f"Mean absolute SHAP value: {top_feature['mean_abs_shap']:.6f}")
