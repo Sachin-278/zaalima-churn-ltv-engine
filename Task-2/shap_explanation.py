@@ -16,12 +16,25 @@ DATA_PATH = REPO_ROOT / "Task-1" / "Data" / "telco_churn.csv"
 ARTIFACTS_DIR = REPO_ROOT / "Task-2" / "artifacts"
 
 
+# Validate required input files before loading
+if not MODEL_PATH.exists():
+    raise FileNotFoundError(
+        f"Trained model not found: {MODEL_PATH}"
+    )
+
+if not DATA_PATH.exists():
+    raise FileNotFoundError(
+        f"Dataset not found: {DATA_PATH}"
+    )
+
+
 # Load trained model
 model = joblib.load(MODEL_PATH)
 
 # Load and engineer the data
 data = pd.read_csv(DATA_PATH)
 data = engineer_features(data)
+
 
 # Use the same features used by the classification model
 feature_columns = [
@@ -57,6 +70,7 @@ X = data[feature_columns]
 preprocessor = model.named_steps["preprocessor"]
 classifier = model.named_steps["classifier"]
 
+
 # Transform the data using the same preprocessing used during training
 X_transformed = preprocessor.transform(X)
 
@@ -83,6 +97,7 @@ print(f"Number of features: {X_transformed.shape[1]}")
 
 # Create SHAP summary plot
 plt.figure()
+
 shap.summary_plot(
     shap_values,
     X_transformed,
@@ -109,10 +124,14 @@ importance = importance.sort_values(
     ascending=False,
 )
 
+
+# Save SHAP feature importance
 importance_path = ARTIFACTS_DIR / "shap_feature_importance.csv"
 importance.to_csv(importance_path, index=False)
 
 print(f"SHAP feature importance saved to: {importance_path}")
 
+
+# Display top 10 features
 print("\nTop 10 features influencing churn predictions:")
 print(importance.head(10).to_string(index=False))
