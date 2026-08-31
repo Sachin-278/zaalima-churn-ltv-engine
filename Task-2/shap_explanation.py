@@ -134,8 +134,8 @@ importance = importance.sort_values(
 
 # Save SHAP feature importance
 importance_path = ARTIFACTS_DIR / "shap_feature_importance.csv"
+importance["mean_abs_shap"] = importance["mean_abs_shap"].round(6)
 importance.to_csv(importance_path, index=False)
-
 print(f"SHAP feature importance saved to: {importance_path}")
 
 
