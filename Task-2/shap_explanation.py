@@ -90,7 +90,14 @@ explainer = shap.TreeExplainer(classifier)
 # Calculate SHAP values
 shap_values = explainer.shap_values(X_transformed)
 
+# Validate that SHAP values match the transformed feature count
+if shap_values.shape[1] != X_transformed.shape[1]:
+    raise ValueError(
+        "SHAP values do not match the number of transformed features."
+    )
+
 print("SHAP values calculated successfully.")
+print("SHAP feature count validation passed.")
 print(f"Number of samples: {X_transformed.shape[0]}")
 print(f"Number of features: {X_transformed.shape[1]}")
 
@@ -132,8 +139,10 @@ importance.to_csv(importance_path, index=False)
 print(f"SHAP feature importance saved to: {importance_path}")
 
 
+# Display top 10 features
 print("\nTop 10 features influencing churn predictions:")
 print(importance.head(10).to_string(index=False))
+
 
 # Display the most influential feature
 top_feature = importance.iloc[0]
