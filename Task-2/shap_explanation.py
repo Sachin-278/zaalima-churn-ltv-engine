@@ -63,6 +63,17 @@ feature_columns = [
     'charges_per_tenure',
 ]
 
+# Validate that all required features are available
+missing_features = [
+    column for column in feature_columns
+    if column not in data.columns
+]
+
+if missing_features:
+    raise ValueError(
+        f"Missing required feature columns: {missing_features}"
+    )
+
 X = data[feature_columns]
 
 
