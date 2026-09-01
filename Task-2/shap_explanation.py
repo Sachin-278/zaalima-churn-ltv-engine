@@ -75,6 +75,7 @@ if missing_features:
     )
 
 X = data[feature_columns]
+print(f"Original input features: {len(feature_columns)}")
 
 
 # Get the preprocessing and XGBoost classifier
