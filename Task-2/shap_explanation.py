@@ -14,6 +14,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = REPO_ROOT / "Task-2" / "artifacts" / "xgboost.joblib"
 DATA_PATH = REPO_ROOT / "Task-1" / "Data" / "telco_churn.csv"
 ARTIFACTS_DIR = REPO_ROOT / "Task-2" / "artifacts"
+# Ensure the artifacts directory exists before saving outputs
+ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # Validate required input files before loading
