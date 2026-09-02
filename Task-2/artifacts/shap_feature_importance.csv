@@ -1,0 +1,56 @@
+feature,mean_abs_shap
+categorical__Contract_Month-to-month,0.6604326
+numeric__tenure,0.42315817
+categorical__OnlineSecurity_No,0.2569237
+categorical__TechSupport_No,0.19676293
+numeric__charges_per_tenure,0.18786208
+categorical__InternetService_Fiber optic,0.17416129
+numeric__TotalCharges,0.16861579
+categorical__Contract_Two year,0.16627279
+numeric__MonthlyCharges,0.16211045
+categorical__PaymentMethod_Electronic check,0.160723
+numeric__avg_monthly_usage_vs_charge,0.14827831
+categorical__MultipleLines_No,0.110599004
+categorical__PaperlessBilling_No,0.09980725
+categorical__OnlineBackup_No,0.088023596
+numeric__SeniorCitizen,0.054936588
+categorical__Contract_One year,0.054476537
+categorical__StreamingMovies_Yes,0.051405653
+categorical__InternetService_DSL,0.046410114
+categorical__StreamingTV_Yes,0.046373706
+categorical__Dependents_No,0.042943016
+categorical__PaperlessBilling_Yes,0.03904114
+categorical__gender_Female,0.027608158
+categorical__tenure_bucket_24-36m,0.023774872
+categorical__Partner_No,0.02375321
+numeric__num_services_subscribed,0.023663059
+categorical__PhoneService_No,0.022775292
+categorical__PaymentMethod_Bank transfer (automatic),0.02088571
+categorical__OnlineSecurity_Yes,0.018972613
+categorical__MultipleLines_Yes,0.018827014
+categorical__TechSupport_Yes,0.014118793
+categorical__tenure_bucket_36-48m,0.013772013
+categorical__DeviceProtection_Yes,0.012278465
+categorical__DeviceProtection_No,0.012208544
+categorical__StreamingTV_No,0.0117024155
+categorical__StreamingMovies_No,0.010678205
+categorical__tenure_bucket_48-60m,0.010211283
+categorical__PaymentMethod_Credit card (automatic),0.010178674
+categorical__gender_Male,0.00995732
+categorical__tenure_bucket_0-6m,0.009790579
+categorical__Dependents_Yes,0.009501527
+categorical__PaymentMethod_Mailed check,0.008923311
+categorical__Partner_Yes,0.006850523
+categorical__tenure_bucket_12-24m,0.0065552033
+categorical__InternetService_No,0.0064139524
+categorical__OnlineBackup_Yes,0.005789176
+categorical__tenure_bucket_6-12m,0.0052464525
+categorical__tenure_bucket_60-120m,0.0047612633
+categorical__PhoneService_Yes,0.0038872678
+categorical__MultipleLines_No phone service,0.0013045645
+categorical__OnlineSecurity_No internet service,0.0
+categorical__StreamingMovies_No internet service,0.0
+categorical__OnlineBackup_No internet service,0.0
+categorical__StreamingTV_No internet service,0.0
+categorical__TechSupport_No internet service,0.0
+categorical__DeviceProtection_No internet service,0.0
