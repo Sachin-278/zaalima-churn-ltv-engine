@@ -164,3 +164,4 @@ top_feature = importance.iloc[0]
 print("\nMost influential feature:")
 print(f"Feature: {top_feature['feature']}")
 print(f"Mean absolute SHAP value: {top_feature['mean_abs_shap']:.6f}")
+print("\nSHAP analysis completed successfully.")
