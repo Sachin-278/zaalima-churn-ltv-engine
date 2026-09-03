@@ -14,6 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = REPO_ROOT / "Task-2" / "artifacts" / "xgboost.joblib"
 DATA_PATH = REPO_ROOT / "Task-1" / "Data" / "telco_churn.csv"
 ARTIFACTS_DIR = REPO_ROOT / "Task-2" / "artifacts"
+
 # Ensure the artifacts directory exists before saving outputs
 ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -65,6 +66,7 @@ feature_columns = [
     'charges_per_tenure',
 ]
 
+
 # Validate that all required features are available
 missing_features = [
     column for column in feature_columns
@@ -77,6 +79,7 @@ if missing_features:
     )
 
 X = data[feature_columns]
+
 print(f"Original input features: {len(feature_columns)}")
 
 
@@ -103,6 +106,7 @@ explainer = shap.TreeExplainer(classifier)
 
 # Calculate SHAP values
 shap_values = explainer.shap_values(X_transformed)
+
 
 # Validate that SHAP values match the transformed feature count
 if shap_values.shape[1] != X_transformed.shape[1]:
@@ -146,10 +150,20 @@ importance = importance.sort_values(
 )
 
 
+# Round SHAP importance values for consistent reporting
+importance["mean_abs_shap"] = importance["mean_abs_shap"].round(6)
+
+
 # Save SHAP feature importance
 importance_path = ARTIFACTS_DIR / "shap_feature_importance.csv"
-importance["mean_abs_shap"] = importance["mean_abs_shap"].round(6)
 importance.to_csv(importance_path, index=False)
+
+# Validate that the feature importance output was created successfully
+if not importance_path.exists():
+    raise FileNotFoundError(
+        f"SHAP feature importance file was not created: {importance_path}"
+    )
+
 print(f"SHAP feature importance saved to: {importance_path}")
 
 
@@ -164,4 +178,7 @@ top_feature = importance.iloc[0]
 print("\nMost influential feature:")
 print(f"Feature: {top_feature['feature']}")
 print(f"Mean absolute SHAP value: {top_feature['mean_abs_shap']:.6f}")
+
+
+# Display completion message
 print("\nSHAP analysis completed successfully.")
