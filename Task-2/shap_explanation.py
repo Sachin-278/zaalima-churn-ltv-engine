@@ -135,6 +135,12 @@ summary_path = ARTIFACTS_DIR / "shap_summary.png"
 plt.savefig(summary_path, bbox_inches="tight")
 plt.close()
 
+# Validate that the SHAP summary plot was created successfully
+if not summary_path.exists():
+    raise FileNotFoundError(
+        f"SHAP summary plot was not created: {summary_path}"
+    )
+
 print(f"SHAP summary plot saved to: {summary_path}")
 
 
