@@ -161,9 +161,14 @@ importance["mean_abs_shap"] = importance["mean_abs_shap"].round(6)
 
 
 # Save SHAP feature importance
+# Save SHAP feature importance
 importance_path = ARTIFACTS_DIR / "shap_feature_importance.csv"
-importance.to_csv(importance_path, index=False)
 
+# Validate that SHAP importance data is available
+if importance.empty:
+    raise ValueError("SHAP feature importance data is empty.")
+
+importance.to_csv(importance_path, index=False)
 # Validate that the feature importance output was created successfully
 if not importance_path.exists():
     raise FileNotFoundError(
