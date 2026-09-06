@@ -41,35 +41,36 @@ data = engineer_features(data)
 
 # Use the same features used by the classification model
 feature_columns = [
-    'gender',
-    'SeniorCitizen',
-    'Partner',
-    'Dependents',
-    'tenure',
-    'PhoneService',
-    'MultipleLines',
-    'InternetService',
-    'OnlineSecurity',
-    'OnlineBackup',
-    'DeviceProtection',
-    'TechSupport',
-    'StreamingTV',
-    'StreamingMovies',
-    'Contract',
-    'PaperlessBilling',
-    'PaymentMethod',
-    'MonthlyCharges',
-    'TotalCharges',
-    'avg_monthly_usage_vs_charge',
-    'tenure_bucket',
-    'num_services_subscribed',
-    'charges_per_tenure',
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges",
+    "avg_monthly_usage_vs_charge",
+    "tenure_bucket",
+    "num_services_subscribed",
+    "charges_per_tenure",
 ]
 
 
 # Validate that all required features are available
 missing_features = [
-    column for column in feature_columns
+    column
+    for column in feature_columns
     if column not in data.columns
 ]
 
@@ -78,6 +79,8 @@ if missing_features:
         f"Missing required feature columns: {missing_features}"
     )
 
+
+# Select model features
 X = data[feature_columns]
 
 print(f"Original input features: {len(feature_columns)}")
@@ -114,6 +117,7 @@ if shap_values.shape[1] != X_transformed.shape[1]:
         "SHAP values do not match the number of transformed features."
     )
 
+
 print("SHAP values calculated successfully.")
 print("SHAP feature count validation passed.")
 print(f"Number of samples: {X_transformed.shape[0]}")
@@ -132,14 +136,21 @@ shap.summary_plot(
 plt.tight_layout()
 
 summary_path = ARTIFACTS_DIR / "shap_summary.png"
-plt.savefig(summary_path, bbox_inches="tight")
+
+plt.savefig(
+    summary_path,
+    bbox_inches="tight",
+)
+
 plt.close()
+
 
 # Validate that the SHAP summary plot was created successfully
 if not summary_path.exists():
     raise FileNotFoundError(
         f"SHAP summary plot was not created: {summary_path}"
     )
+
 
 print(f"SHAP summary plot saved to: {summary_path}")
 
@@ -150,45 +161,81 @@ importance = pd.DataFrame({
     "mean_abs_shap": abs(shap_values).mean(axis=0),
 })
 
+
+# Sort features by importance
 importance = importance.sort_values(
     "mean_abs_shap",
     ascending=False,
 )
 
 
+# Validate that SHAP importance values do not contain missing values
+if importance["mean_abs_shap"].isna().any():
+    raise ValueError(
+        "SHAP feature importance contains missing values."
+    )
+
+
 # Round SHAP importance values for consistent reporting
-importance["mean_abs_shap"] = importance["mean_abs_shap"].round(6)
+importance["mean_abs_shap"] = (
+    importance["mean_abs_shap"].round(6)
+)
 
 
 # Save SHAP feature importance
-# Save SHAP feature importance
-importance_path = ARTIFACTS_DIR / "shap_feature_importance.csv"
+importance_path = (
+    ARTIFACTS_DIR / "shap_feature_importance.csv"
+)
+
 
 # Validate that SHAP importance data is available
 if importance.empty:
-    raise ValueError("SHAP feature importance data is empty.")
+    raise ValueError(
+        "SHAP feature importance data is empty."
+    )
 
-importance.to_csv(importance_path, index=False)
+
+importance.to_csv(
+    importance_path,
+    index=False,
+)
+
+
 # Validate that the feature importance output was created successfully
 if not importance_path.exists():
     raise FileNotFoundError(
-        f"SHAP feature importance file was not created: {importance_path}"
+        f"SHAP feature importance file was not created: "
+        f"{importance_path}"
     )
 
-print(f"SHAP feature importance saved to: {importance_path}")
+
+print(
+    f"SHAP feature importance saved to: "
+    f"{importance_path}"
+)
 
 
 # Display top 10 features
 print("\nTop 10 features influencing churn predictions:")
-print(importance.head(10).to_string(index=False))
+
+print(
+    importance.head(10).to_string(
+        index=False
+    )
+)
 
 
 # Display the most influential feature
 top_feature = importance.iloc[0]
 
 print("\nMost influential feature:")
-print(f"Feature: {top_feature['feature']}")
-print(f"Mean absolute SHAP value: {top_feature['mean_abs_shap']:.6f}")
+print(
+    f"Feature: {top_feature['feature']}"
+)
+print(
+    f"Mean absolute SHAP value: "
+    f"{top_feature['mean_abs_shap']:.6f}"
+)
 
 
 # Display completion message
