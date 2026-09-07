@@ -176,6 +176,13 @@ if importance["mean_abs_shap"].isna().any():
     )
 
 
+# Validate that mean absolute SHAP importance values are non-negative
+if (importance["mean_abs_shap"] < 0).any():
+    raise ValueError(
+        "SHAP feature importance contains negative values."
+    )
+
+
 # Round SHAP importance values for consistent reporting
 importance["mean_abs_shap"] = (
     importance["mean_abs_shap"].round(6)
