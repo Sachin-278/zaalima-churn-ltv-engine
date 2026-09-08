@@ -221,6 +221,10 @@ print(
     f"{importance_path}"
 )
 
+print(
+    f"Total features ranked by SHAP: {len(importance)}"
+)
+
 
 # Display top 10 features
 print("\nTop 10 features influencing churn predictions:")
